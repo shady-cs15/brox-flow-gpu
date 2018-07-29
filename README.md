@@ -7,6 +7,6 @@ mkdir build
 cd build
 cmake ..
 make
-./compute_flow
+./compute_flow <file_1> <file_2> <prefix>
 
 ```
