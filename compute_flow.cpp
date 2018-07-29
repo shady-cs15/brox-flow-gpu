@@ -31,18 +31,31 @@ GpuMat get_flow_from_files(string file_name1, string file_name2, Ptr<BroxOptical
     return d_flow;
 }
 
+void usage() {
+    cout << "Usage: ./compute_flow <file_1> <file_2> <prefix>\n";
+    cout << "prefix eg: ../test_data/flow\n";
+    cout << "output is saved as ../test_data/flow_x.jpg, ../test_data/flow_x.jpg, ../test_data/flow_minmax.txt\n";
+}
 
 int main(int argc, char** argv){
 
-    string file1 = "../test_data/01.jpg";
-    string file2 = "../test_data/02.jpg";
+    if (argc < 4) {
+        usage();
+        return 1;
+    }
+
+    string file1 = argv[1];
+    string file2 = argv[2];
+    string out_prefix = argv[3];
+    //string file1 = "../test_data/01.jpg";
+    //string file2 = "../test_data/02.jpg";
 
     Ptr<BroxOpticalFlow> brox = BroxOpticalFlow::create(0.197f, 50.0f, 0.8f, 10, 77, 10);
 
     GpuMat flow = get_flow_from_files(file1, file2, brox);
 
-    string flow_name = "flow";
+    //string flow_name = "flow";
 
-    saveFlow(flow_name, flow);
+    saveFlow(out_prefix, flow);
     return 0;
 }
